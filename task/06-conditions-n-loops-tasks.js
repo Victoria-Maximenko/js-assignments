@@ -136,7 +136,12 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    return !(
+        rect1.top > rect2.top + rect2.height ||
+        rect1.left > rect2.left + rect2.width ||
+        rect1.top + rect1.height < rect2.top ||
+        rect1.left + rect1.width < rect2.left
+    );
 }
 
 
@@ -167,8 +172,9 @@ function doRectanglesOverlap(rect1, rect2) {
  *   
  */
 function isInsideCircle(circle, point) {
-    throw new Error('Not implemented');
+    return Math.hypot(circle.center.x - point.x, circle.center.y - point.y) < circle.radius;
 }
+
 
 
 /**
@@ -300,8 +306,14 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-
+    return (ccn+'').split('')
+        .reverse()
+        .map( (x) => parseInt(x) )
+        .map( (x,idx) => idx % 2 ? x * 2 : x )
+        .map( (x) => x > 9 ? (x % 10) + 1 : x )
+        .reduce( (accum, x) => accum += x ) % 10 === 0;
 }
+
 
 
 
@@ -431,33 +443,34 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    var msUTC1 = Date.parse(startDate);
-    var msUTC2 = Date.parse(endDate);
-    var difference = msUTC2 - msUTC1;
-
-   if ((difference>=0 && Math.floor(difference/1000) <45)) {return  'a few seconds ago'}
- if(Math.floor(difference/1000)>=45 && difference <90000) { return 'a minute ago'}
-if(difference>=90000 && difference < 2700000) { 
-	var itog = Math.floor(difference/60000)
-	return `${itog} minutes ago`}
-if(difference>=2700000 && difference < 5400000) {return 'an hour ago'}
-if (difference>=5400000 && difference < 79200000){ 
-	var itog = Math.floor(difference/3600000)
-	return `${itog} hours ago`}
-if(difference>=79200000 && difference < 129600000) {return 'a day ago'}
-if(difference>=129600000 && difference < 2160000000){ 
-	var itog = Math.floor(difference/86400000)
-	return `${itog} days ago`}
- if(difference>=2160000000 && difference < 3888000000){return 'a month ago'}
-if(difference>=3888000000 && difference < 29808000000){ 
-	var itog = Math.floor(difference/2678400000)
-	return `${itog} months ago`}
-if(difference>=29808000000  && difference < 47088000000){return 'a year ago'}
-if (difference>=47088000000){ 
-	var itog = Math.floor(difference/31536000000)
-	return `${itog} years ago`}
-
+    let difference = endDate.getTime() - startDate.getTime(),
+    s = 1000, // second
+    m = s * 60, // minute
+    h = m * 60, // hour
+    d = h * 24; // day
+    if (difference <= 45 * s)
+        return 'a few seconds ago';
+    if (difference <= 90 * s)
+        return 'a minute ago';
+    if (difference <= 45 * m)
+        return `${Math.round((difference - 1) / m)} minutes ago`;
+    if (difference <= 90 * m)
+        return 'an hour ago';
+    if (difference <= 22 * h)
+        return `${Math.round((difference - 1) / h)} hours ago`;
+    if (difference <= 36 * h)
+        return 'a day ago';
+    if (difference <= 25 * d)
+        return `${Math.round((difference - 1) / d)} days ago`;
+    if (difference <= 45 * d)
+        return 'a month ago';
+    if (difference <= 345 * d)
+        return `${Math.round(difference / 30 / d)} months ago`;
+    if (difference <= 545 * d)
+        return 'a year ago';
+    return `${Math.round(difference / 365 / d)} years ago`;
 }
+
 
 
 /**
@@ -480,9 +493,15 @@ if (difference>=47088000000){
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    var result = (num).toString(n);
-    return result
+    var result = '';
+    num = num.toString();
+    while (num >= n) {
+        result = (num % n) + result;
+        num = Math.floor(num / n);
+    }
+    return num + result; // or return num.toString(n);
 }
+
 
 
 /**

@@ -82,7 +82,12 @@ else
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+   function n0(value, count) { 
+      value = value.toString(); 
+      return '0'.repeat(count - value.length) + value; 
+  } 
+   var d = new Date(endDate.getTime() - startDate.getTime() + (new Date()).getTimezoneOffset() * 60 * 1000); 
+   return `${n0(d.getHours(), 2)}:${n0(d.getMinutes(), 2)}:${n0(d.getSeconds(), 2)}.${n0(d.getMilliseconds(), 3)}`;
 }
 
 
@@ -100,7 +105,8 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+   var a = Math.abs((date.getUTCHours() * 60 + date.getUTCMinutes() - date.getUTCMinutes() * 12) / 2) % 360;
+   return (a <= 180 ? a : 360 - a) / 180 * Math.PI;
 }
 
 
