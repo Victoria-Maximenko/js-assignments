@@ -300,7 +300,7 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
- 
+
 }
 
 
@@ -530,8 +530,26 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(m1, m2) {
-    throw new Error('Not implemented');
+
+function getMatrixProduct (m1, m2)
+{
+	var rowsA = m1.length, colsA = m1[0].length,
+        rowsB = m2.length, colsB = m2[0].length,
+        C = [];
+
+    if (colsA != rowsB) return false;
+
+    for (var i = 0; i < rowsA; i++) C[i] = [];
+
+    for (var k = 0; k < colsB; k++)
+     { for (var i = 0; i < rowsA; i++)
+        { var temp = 0;
+          for (var j = 0; j < rowsB; j++) temp += m1[i][j]*m2[j][k];
+          C[i][k] = temp;
+        }
+     }
+
+    return C;
 }
 
 
@@ -566,7 +584,56 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    if(position[0][0] === 'X' && position[0][1] === 'X' && position[0][2] === 'X'){
+    	return 'X'
+    }
+    if(position[1][0] === 'X' && position[1][1] === 'X' && position[1][2] === 'X'){
+    	return 'X'
+    }
+    if(position[2][0] === 'X' && position[2][1] === 'X' && position[2][2] === 'X'){
+    	return 'X'
+    }
+    if(position[0][0] === 'X' && position[1][0] === 'X' && position[2][0] === 'X'){
+    	return 'X'
+    }
+    if(position[0][1] === 'X' && position[1][1] === 'X' && position[2][1] === 'X'){
+    	return 'X'
+    }
+    if(position[0][2] === 'X' && position[1][2] === 'X' && position[2][2] === 'X'){
+    	return 'X'
+    }
+    if(position[0][0] === 'X' && position[1][1] === 'X' && position[2][2] === 'X'){
+    	return 'X'
+    }
+    if(position[0][2] === 'X' && position[1][1] === 'X' && position[2][0] === 'X'){
+    	return 'X'
+    }
+     if(position[0][0] === '0' && position[0][1] === '0' && position[0][2] === '0'){
+    	return '0'
+    }
+    if(position[1][0] === '0' && position[1][1] === '0' && position[1][2] === '0'){
+    	return '0'
+    }
+    if(position[2][0] === '0' && position[2][1] === '0' && position[2][2] === '0'){
+    	return '0'
+    }
+    if(position[0][0] === '0' && position[1][0] === '0' && position[2][0] === '0'){
+    	return '0'
+    }
+    if(position[0][1] === '0' && position[1][1] === '0' && position[2][1] === '0'){
+    	return '0'
+    }
+    if(position[0][2] === '0' && position[1][2] === '0' && position[2][2] === '0'){
+    	return '0'
+    }
+    if(position[0][0] === '0' && position[1][1] === '0' && position[2][2] === '0'){
+    	return '0'
+    }
+    if(position[0][2] === '0' && position[1][1] === '0' && position[2][0] === '0'){
+    	return '0'
+    }
+    return undefined
+
 }
 
 
