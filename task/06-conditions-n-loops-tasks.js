@@ -30,7 +30,17 @@
  *
  */
 function getFizzBuzz(num) {
-    throw new Error('Not implemented');
+	if(num%15===0){
+    	return 'FizzBuzz';
+    }
+	if(num%21===0 || num%3===0){
+    	return 'Fizz';
+    }
+	if(num%20===0 || num%5===0){
+    	return 'Buzz';
+    }
+	
+    return num
 }
 
 
@@ -46,8 +56,12 @@ function getFizzBuzz(num) {
  *   10 => 3628800
  */
 function getFactorial(n) {
-    throw new Error('Not implemented');
+    if(n===1){
+    	return 1
+    }
+    return n*getFactorial(n-1)
 }
+
 
 
 /**
@@ -63,7 +77,7 @@ function getFactorial(n) {
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
 function getSumBetweenNumbers(n1, n2) {
-    throw new Error('Not implemented');
+    return ((n2-n1)+1) * (n1 + n2) / 2;
 }
 
 
@@ -82,7 +96,10 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a,b,c) {
-    throw new Error('Not implemented');
+    if(a<b+c && b<a+c && c<a+b){
+    	return true
+    }
+    return false
 }
 
 
@@ -166,7 +183,13 @@ function isInsideCircle(circle, point) {
  *   'entente' => null
  */
 function findFirstSingleChar(str) {
-    throw new Error('Not implemented');
+    for (var i = 0; i < str.length; i++) {
+    var c = str.charAt(i);
+    if (str.indexOf(c) == i && str.indexOf(c, i + 1) == -1) {
+      return c;
+    }
+  }
+  return null;
 }
 
 
@@ -192,7 +215,27 @@ function findFirstSingleChar(str) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-    throw new Error('Not implemented');
+    var open2 = ')';
+    var open1 = '(';
+    var close1 = '[';
+    var close2 = ']';
+    if (a>b){
+    	var temp = b;
+    	b=a;
+    	a=temp;
+    }
+    if(isStartIncluded === true&&isEndIncluded === true){
+    	return `${close1}${a}, ${b}${close2}`
+    }
+     if(isStartIncluded === false&&isEndIncluded === false){
+    	return `${open1}${a}, ${b}${open2}`
+    }
+    if(isStartIncluded === false&&isEndIncluded === true){
+    	return `${open1}${a}, ${b}${close2}`
+    }
+    if(isStartIncluded === true&&isEndIncluded === false){
+    	return `${close1}${a}, ${b}${open2}`
+    }
 }
 
 
@@ -209,7 +252,9 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'noon' => 'noon'
  */
 function reverseString(str) {
-    throw new Error('Not implemented');
+    var array = str.split('');
+    array.reverse();
+    return array.join('');
 }
 
 
@@ -226,7 +271,11 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-    throw new Error('Not implemented');
+	var string = num.toString();
+    var array = string.split('').reverse();
+    var string2 = array.join('');
+    return Number.parseInt(string2)
+
 }
 
 
@@ -251,8 +300,9 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
+ 
 }
+
 
 
 /**
@@ -269,8 +319,24 @@ function isCreditCardNumber(ccn) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
+
 function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+    var string = num.toString();
+    var array = string.split('');
+    var summ = 0;
+    for(var i=0; i<array.length; i++){
+    	array[i] = Number.parseInt(array[i]);
+    	summ+=array[i]
+    }
+   var preResult = summ.toString();
+   var arrayNew = preResult.split('');
+   var summ1=0;
+   for(var i=0; i<arrayNew.length; i++){
+    	arrayNew[i] = Number.parseInt(arrayNew[i]);
+    	summ1+=arrayNew[i]
+    }
+    return summ1
+    
 }
 
 
@@ -295,8 +361,41 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true 
  */
+
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+  var stack = [];
+  
+  var pairs = {
+    "{": "}",
+    "(": ")",
+    "[": "]",
+    "<": ">",
+ 
+
+  }
+  
+  var closers = {
+    "}": 1,
+    ")": 1,
+    "]": 1,
+    ">": 1
+
+    
+  }
+  
+  for(var i=0; i<str.length;i++) {
+    var char = str[i];
+    if(pairs[char]){
+      stack.push(pairs[char]);
+    } else if(char in closers){
+        if(stack[stack.length-1] === char){
+          stack.pop();
+        } else {
+          return false;
+        }      
+    }    
+  }
+  return stack.length === 0;
 }
 
 
@@ -332,7 +431,32 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    var msUTC1 = Date.parse(startDate);
+    var msUTC2 = Date.parse(endDate);
+    var difference = msUTC2 - msUTC1;
+
+   if ((difference>=0 && Math.floor(difference/1000) <45)) {return  'a few seconds ago'}
+ if(Math.floor(difference/1000)>=45 && difference <90000) { return 'a minute ago'}
+if(difference>=90000 && difference < 2700000) { 
+	var itog = Math.floor(difference/60000)
+	return `${itog} minutes ago`}
+if(difference>=2700000 && difference < 5400000) {return 'an hour ago'}
+if (difference>=5400000 && difference < 79200000){ 
+	var itog = Math.floor(difference/3600000)
+	return `${itog} hours ago`}
+if(difference>=79200000 && difference < 129600000) {return 'a day ago'}
+if(difference>=129600000 && difference < 2160000000){ 
+	var itog = Math.floor(difference/86400000)
+	return `${itog} days ago`}
+ if(difference>=2160000000 && difference < 3888000000){return 'a month ago'}
+if(difference>=3888000000 && difference < 29808000000){ 
+	var itog = Math.floor(difference/2678400000)
+	return `${itog} months ago`}
+if(difference>=29808000000  && difference < 47088000000){return 'a year ago'}
+if (difference>=47088000000){ 
+	var itog = Math.floor(difference/31536000000)
+	return `${itog} years ago`}
+
 }
 
 
@@ -356,7 +480,8 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    var result = (num).toString(n);
+    return result
 }
 
 
@@ -373,7 +498,17 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-    throw new Error('Not implemented');
+  const p0 = pathes[0];
+  let cl = p0.length;
+  for (const p of pathes) {
+    for (let i = 0; i < cl; i++) {
+      if (p[i] != p0[i]) {
+        cl = i;
+        break;
+      }
+    }
+  }
+  return cl == 0 ? '' : p0.slice(0, p0.lastIndexOf('/', cl - 1) + 1);
 }
 
 

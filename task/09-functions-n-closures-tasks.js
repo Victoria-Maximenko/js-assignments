@@ -25,8 +25,12 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.acos(x))
  *
  */
+ 
+
 function getComposition(f,g) {
-    throw new Error('Not implemented');
+    return function(x) {
+    return f(g(x));
+  };
 }
 
 
@@ -83,8 +87,18 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(func) {
-    throw new Error('Not implemented');
+function memoize(fn) {
+    var memory = new Map();
+    return function(arg) {
+        if (memory.has(arg)) {
+            console.log('using memory');
+            return memory.get(arg);
+        } else {
+            var result = fn(arg);
+            memory.set(arg, result);
+            return result;
+        }
+    };
 }
 
 
