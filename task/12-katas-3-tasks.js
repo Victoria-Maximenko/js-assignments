@@ -28,7 +28,7 @@
  *   'NULL'      => false 
  */
 function findStringInSnakingPuzzle(puzzle, searchStr) {
-    throw new Error('Not implemented');
+   throw new Error('Not implemented');
 }
 
 
