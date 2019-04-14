@@ -69,23 +69,14 @@ function getPowerFunction(exponent) {
  *   getPolynom()      => null
  */
 function getPolynom() {
-	if(arguments.length === 1){
-	    return function(x){
-	    	return arguments[0]
-	    }
-	 }
-	if(arguments.length === 2){
-	    return function(x){
-	    	return arguments[0]*x+arguments[1]
-	    }
-	 }
-	if(arguments.length === 3){
-	    return function(x){
-	    	return arguments[0]*x*x+arguments[1]*x+arguments[2]
-	    }
-	 }
-	 return function(x){return null}
-
+    let array = Array.from(arguments);
+    return function(x) {
+        let result = 0;
+        for (let i = array.length - 1, j = 0; i >= 0; i--, j++) {
+            result += Math.pow(x, i) * array[j];
+        }
+        return result;
+    }
 }
 
 
@@ -136,7 +127,17 @@ function memoize(fn) {
  * retryer() => 2
  */
 function retry(func, attempts) {
-    throw new Error('Not implemented');
+    return function () {
+        let result = 0;
+        for (let i = 0; i < attempts; i++) {
+            try {
+                result = func();
+                return result;
+            } catch (e) {
+                continue;
+            }
+        }
+    }
 }
 
 
